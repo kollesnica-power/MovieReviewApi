@@ -1,6 +1,7 @@
 package com.example.kollesnica_power.moviereviewsapi.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.kollesnica_power.moviereviewsapi.R;
 import com.example.kollesnica_power.moviereviewsapi.adapter.ReviewAdapter;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ReviewModel> mReviews = new ArrayList<>();
     private RecyclerView recyclerView;
     private ReviewAdapter mAdapter;
-    private Button mBtnReadMore;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setAdapter();
+        setRefreshLayout();
         makeRequest();
 
 
@@ -55,6 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void setRefreshLayout() {
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                makeRequest();
+            }
+        });
+
+    }
+
     private void makeRequest() {
 
         RequestBuilder.reviewsRequest(getString(R.string.reviews_url)).getData(getString(R.string.api_key)).enqueue(new Callback<ReviewResponse>() {
@@ -64,12 +80,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("RequestSuccess", response.toString());
                 mReviews.addAll(response.body().getResults());
                 mAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
 
             }
 
             @Override
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
 
+                mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getApplicationContext(), "Request error", Toast.LENGTH_LONG).show();
                 Log.e("RequestSuccess", t.getLocalizedMessage());
 
             }

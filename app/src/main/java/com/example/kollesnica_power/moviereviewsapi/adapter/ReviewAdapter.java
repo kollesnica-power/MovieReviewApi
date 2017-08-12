@@ -51,6 +51,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
         final ReviewModel review = moviesList.get(position);
 
+        holder.image.setBackgroundColor(androidColors[new Random().nextInt(androidColors.length)]);
         if (review.getMultimedia().getSrc() != null && !review.getMultimedia().getSrc().isEmpty()){
 
             Glide
@@ -58,19 +59,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                     .load(review.getMultimedia().getSrc())
                     .into(holder.image);
 
-        }else {
-
-            holder.image.setBackgroundColor(androidColors[new Random().nextInt(androidColors.length)]);
-
         }
 
         holder.title.setText(review.getDisplayTitle());
+
         if (review.getMpaaRating() != null && !review.getMpaaRating().isEmpty()) {
             holder.rating.setText(review.getMpaaRating());
             holder.rating.setVisibility(View.VISIBLE);
         }else {
             holder.rating.setVisibility(View.INVISIBLE);
         }
+
         holder.date.setText(review.getPublicationDate());
         holder.headline.setText(review.getHeadline());
         holder.summary.setText(review.getSummaryShort());
