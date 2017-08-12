@@ -55,15 +55,17 @@ public class Presenter implements MainMVP.presenter {
 
                 Log.e("RequestSuccess", response.toString());
 
+                mView.hideRefresher();
+                mReviews.clear();
+
                 if (response.body() != null && response.body().getResults().size() > 0) {
 
-                    mReviews.clear();
                     mReviews.addAll(response.body().getResults());
-                    mAdapter.notifyDataSetChanged();
-                    mView.hideRefresher();
                     mRecyclerView.smoothScrollToPosition(0);
 
                 }
+
+                mAdapter.notifyDataSetChanged();
 
             }
 
