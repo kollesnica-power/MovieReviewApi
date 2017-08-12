@@ -1,6 +1,7 @@
 package com.example.kollesnica_power.moviereviewsapi.mvp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,26 +23,38 @@ import retrofit2.Response;
 
 
 
-public class Presenter implements MainMVP.presenter {
+public class Presenter implements MainMVP.Presenter {
 
-    private MainMVP.view mView;
+    private MainMVP.View mView;
     private ArrayList<ReviewModel> mReviews = new ArrayList<>();
     private ReviewAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
-    public Presenter(MainMVP.view view){
-        mView = view;
-    }
+
 
     @Override
-    public void setUpAdapter(Activity activity, RecyclerView recyclerView) {
+    public void setUpAdapter(RecyclerView recyclerView) {
 
-        mAdapter = new ReviewAdapter(activity, mReviews);
+        mAdapter = new ReviewAdapter((Activity) mView, mReviews);
         mRecyclerView = recyclerView;
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager((Context) mView);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
+
+    }
+
+    @Override
+    public void attachView(MainMVP.View view) {
+
+        mView = view;
+
+    }
+
+    @Override
+    public void detachView() {
+
+        mView = null;
 
     }
 

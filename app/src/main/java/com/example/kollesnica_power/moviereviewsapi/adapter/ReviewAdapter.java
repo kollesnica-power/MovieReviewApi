@@ -81,7 +81,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return moviesList.size();
+        return (moviesList != null) ? moviesList.size() : 0;
     }
 
     private void openCustomTabs(String url){
