@@ -102,8 +102,12 @@ public class MainActivity extends AppCompatActivity implements MainMVP.view {
             public void onClick(View view) {
 
                 // Reset query
-                mQuery = "";
-                mPresenter.getReviews("");
+                if (!mQuery.isEmpty()) {
+                    mQuery = "";
+                    mPresenter.getReviews("");
+                }else {
+                    mQuery = "";
+                }
 
                 // Hide search view
                 searchView.onActionViewCollapsed();
