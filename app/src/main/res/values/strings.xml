@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MovieReviewsApi</string>
+    <string name="action_settings">Settings</string>
+    <string name="sample_headline">Review: ‘The Nut Job 2’ Squirrels Away the Laughs for Itself</string>
+    <string name="sample_date">2016-09-09</string>
+    <string name="sample_rating">PG-13</string>
+    <string name="sample_text">Sample Text</string>
+    <string name="sample_summary_short">A profiteering mayor threatens to displace a city park’s animal residents unless a grumpy squirrel named Surly can wreck his plans.</string>
+    <string name="read_more">READ MORE</string>
+    <string name="reviews_url">https://api.nytimes.com/</string>
+    <string name="api_key">5918249977794e70a8384ad7f2d741e4</string>
+</resources>
