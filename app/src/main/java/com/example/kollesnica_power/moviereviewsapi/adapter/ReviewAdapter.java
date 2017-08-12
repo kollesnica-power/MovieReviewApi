@@ -1,8 +1,6 @@
 package com.example.kollesnica_power.moviereviewsapi.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.RecyclerView;
@@ -21,9 +19,6 @@ import com.example.kollesnica_power.moviereviewsapi.model.ReviewModel;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by kollesnica1337 on 12.08.2017.
- */
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
@@ -53,7 +48,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         final ReviewModel review = moviesList.get(position);
 
         holder.image.setBackgroundColor(androidColors[new Random().nextInt(androidColors.length)]);
-        if (review.getMultimedia().getSrc() != null && !review.getMultimedia().getSrc().isEmpty()){
+        if (review.getMultimedia() != null && !review.getMultimedia().getSrc().isEmpty()){
 
             Glide
                     .with(mActivity)
@@ -110,7 +105,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         TextView summary;
         Button readmore;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             image = view.findViewById(R.id.iv_review_image);
             title = view.findViewById(R.id.tv_review_name);

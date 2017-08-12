@@ -9,4 +9,5 @@
     <string name="read_more">READ MORE</string>
     <string name="reviews_url">https://api.nytimes.com/</string>
     <string name="api_key">5918249977794e70a8384ad7f2d741e4</string>
+    <string name="search_title">Search</string>
 </resources>
