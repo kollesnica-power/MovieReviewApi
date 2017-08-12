@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,9 +78,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.readmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse(review.getLink().getUrl());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                mActivity.startActivity(intent);
+                openCustomTabs(review.getLink().getUrl());
             }
         });
 
@@ -88,6 +87,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return moviesList.size();
+    }
+
+    private void openCustomTabs(String url){
+
+
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+
+        CustomTabsIntent customTabsIntent = builder.build();
+
+        customTabsIntent.launchUrl(mActivity, Uri.parse(url));
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
