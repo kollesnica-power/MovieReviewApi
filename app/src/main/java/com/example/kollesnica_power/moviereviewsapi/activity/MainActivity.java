@@ -1,4 +1,4 @@
-package com.example.kollesnica_power.moviereviewsapi;
+package com.example.kollesnica_power.moviereviewsapi.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import com.example.kollesnica_power.moviereviewsapi.R;
 import com.example.kollesnica_power.moviereviewsapi.adapter.ReviewAdapter;
 import com.example.kollesnica_power.moviereviewsapi.model.ReviewModel;
 import com.example.kollesnica_power.moviereviewsapi.model.ReviewResponse;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ReviewModel> mReviews = new ArrayList<>();
     private RecyclerView recyclerView;
     private ReviewAdapter mAdapter;
+    private Button mBtnReadMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
 
-        mAdapter = new ReviewAdapter(mReviews);
+        mAdapter = new ReviewAdapter(this, mReviews);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

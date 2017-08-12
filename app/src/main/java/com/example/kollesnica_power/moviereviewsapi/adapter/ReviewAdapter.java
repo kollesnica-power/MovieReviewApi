@@ -1,10 +1,14 @@
 package com.example.kollesnica_power.moviereviewsapi.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,10 +26,12 @@ import java.util.Random;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
+    private Activity mActivity;
     private ArrayList<ReviewModel> moviesList;
     private int[] androidColors;
 
-    public ReviewAdapter(ArrayList<ReviewModel> moviesList) {
+    public ReviewAdapter(Activity activity, ArrayList<ReviewModel> moviesList) {
+        mActivity = activity;
         this.moviesList = moviesList;
         androidColors = App.getInstance().getResources().getIntArray(R.array.androidcolors);
     }
@@ -43,12 +49,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        ReviewModel review = moviesList.get(position);
+        final ReviewModel review = moviesList.get(position);
 
         if (review.getMultimedia().getSrc() != null && !review.getMultimedia().getSrc().isEmpty()){
 
             Glide
-                    .with(App.getInstance())
+                    .with(mActivity)
                     .load(review.getMultimedia().getSrc())
                     .into(holder.image);
 
@@ -69,6 +75,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.headline.setText(review.getHeadline());
         holder.summary.setText(review.getSummaryShort());
 
+        holder.readmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse(review.getLink().getUrl());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                mActivity.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -84,6 +99,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         TextView date;
         TextView headline;
         TextView summary;
+        Button readmore;
 
         public ViewHolder(View view) {
             super(view);
@@ -93,6 +109,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             date = view.findViewById(R.id.tv_review_date);
             headline = view.findViewById(R.id.tv_review_headline);
             summary = view.findViewById(R.id.tv_review_summary_short);
+            readmore = view.findViewById(R.id.btn_review_read_more);
 
         }
     }
